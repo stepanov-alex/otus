@@ -1,0 +1,73 @@
+{
+  "builders": [
+    {
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/vagrant.ks<enter><wait>"
+      ],
+      "boot_wait": "10s",
+      "disk_size": "10240",
+      "export_opts": [
+        "--manifest",
+        "--vsys",
+        "0",
+        "--description",
+        "{{user `artifact_description`}}",
+        "--version",
+        "{{user `artifact_version`}}"
+      ],
+      "guest_os_type": "RedHat_64",
+      "http_directory": "http",
+      "iso_checksum": "sha256:83fb6025b52ba893669575f7df0048b3adc8e66b4d7c19d8f5522651f19150ba",
+      "iso_urls": ["iso/CentOS-Stream-8-x86_64-latest-boot.iso","https://mirror.linux-ia64.org/centos/8-stream/isos/x86_64/CentOS-Stream-8-x86_64-latest-boot.iso"],
+      "name": "{{user `image_name`}}",
+      "output_directory": "builds",
+      "shutdown_command": "echo '{{user `ssh_pass`}}' | sudo -S /sbin/halt -h -p",
+      "shutdown_timeout": "5m",
+      "ssh_password": "{{user `ssh_pass`}}",
+      "ssh_port": 22,
+      "ssh_pty": true,
+      "ssh_timeout": "30m",
+      "ssh_username": "vagrant",
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "1024" ],
+        ["modifyvm", "{{.Name}}", "--cpus", "2" ],
+
+        [ "storagectl", "{{.Name}}", "--name", "SataController", "--add", "sata", "--controller", "IntelAHCI" ],
+        [ "storageattach", "{{.Name}}", "--storagectl", "SataController", "--port", "0", "--device", "0", "--type", "dvddrive", "--medium", "./iso/VBoxGuestAdditions_6.1.38.iso"]
+      ],
+      "vm_name": "packer-centos-vm"
+    }
+  ],
+  "post-processors": [
+    {
+      "compression_level": "5",
+      "output": "centos-{{user `artifact_version`}}-Minimal.box",
+      "type": "vagrant"
+    }
+  ],
+  "provisioners": [
+    {
+      "execute_command": "echo '{{user `ssh_pass`}}' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "expect_disconnect": true,
+      "override": {
+        "{{user `image_name`}}": {
+          "scripts": [
+	    "scripts/wheel.sh",
+	    "scripts/vbox-additional.sh",
+	    "scripts/clean.sh"
+          ]
+        }
+      },
+      "pause_before": "20s",
+      "start_retry_timeout": "1m",
+      "type": "shell"
+    }
+  ],
+  "variables": {
+    "artifact_description": "CentOS 8 Stream",
+    "artifact_version": "8",
+    "image_name": "centos-8stream",
+    "ssh_pass": "vagrant"
+  }
+}
