@@ -1,0 +1,135 @@
+Script started on Fri 01 Dec 2023 10:32:54 AM UTC
+]0;vagrant@lvm:~[?1034h[vagrant@lvm ~]$ xfsdumpyxfsdumpuxfsdumpmxfsdump xfsdumpixfsdumpnxfsdumpsxfsdumptxfsdumpaxfsdumplxfsdumplxfsdump xfsdump[C[C[C[C[C[C[C -y
+Loaded plugins: fastestmirror
+You need to be root to perform this command.
+]0;vagrant@lvm:~[vagrant@lvm ~]$ sudo su
+]0;root@lvm:/home/vagrant[?1034h[root@lvm vagrant]# u[Kyum install xfsdump -y
+Loaded plugins: fastestmirror
+Determining fastest mirrors
+ * base: mirror.corbina.net
+ * extras: mirror.docker.ru
+ * updates: mirror.docker.ru
+base                                                                                             | 3.6 kB  00:00:00     
+extras                                                                                           | 2.9 kB  00:00:00     
+updates                                                                                          | 2.9 kB  00:00:00     
+(2/4): base/7/x86_64/primary_db               0% [                                    ]  0.0 B/s |    0 B  --:--:-- ETA (1/4): base/7/x86_64/group_gz                                                                    | 153 kB  00:00:00     
+(3/4): extras/7/x86_64/primary_db             0% [                                    ]  0.0 B/s | 153 kB  --:--:-- ETA (2/4): extras/7/x86_64/primary_db                                                                | 250 kB  00:00:01     
+(4/4): updates/7/x86_64/primary_db            8% [===                                 ] 3.1 MB/s | 2.5 MB  00:00:08 ETA (3/4): base/7/x86_64/primary_db               17% [=====-                             ] 3.4 MB/s | 5.2 MB  00:00:07 ETA (3/4): base/7/x86_64/primary_db               26% [=========                          ] 3.7 MB/s | 7.9 MB  00:00:05 ETA (3/4): base/7/x86_64/primary_db                                                                  | 6.1 MB  00:00:02     
+(4/4): updates/7/x86_64/primary_db            35% [============-                      ] 4.1 MB/s |  11 MB  00:00:04 ETA (4/4): updates/7/x86_64/primary_db            43% [===============                    ] 4.3 MB/s |  13 MB  00:00:03 ETA (4/4): updates/7/x86_64/primary_db            51% [=================-                 ] 4.5 MB/s |  15 MB  00:00:03 ETA (4/4): updates/7/x86_64/primary_db            56% [===================-               ] 4.6 MB/s |  17 MB  00:00:02 ETA (4/4): updates/7/x86_64/primary_db            61% [=====================-             ] 4.6 MB/s |  19 MB  00:00:02 ETA (4/4): updates/7/x86_64/primary_db            68% [========================           ] 4.7 MB/s |  21 MB  00:00:01 ETA (4/4): updates/7/x86_64/primary_db            75% [==========================         ] 4.8 MB/s |  23 MB  00:00:01 ETA (4/4): updates/7/x86_64/primary_db            82% [============================-      ] 5.0 MB/s |  25 MB  00:00:01 ETA (4/4): updates/7/x86_64/primary_db            86% [==============================     ] 4.9 MB/s |  26 MB  00:00:00 ETA (4/4): updates/7/x86_64/primary_db            94% [================================-  ] 5.0 MB/s |  28 MB  00:00:00 ETA (4/4): updates/7/x86_64/primary_db                                                               |  24 MB  00:00:05     
+Resolving Dependencies
+--> Running transaction check
+---> Package xfsdump.x86_64 0:3.1.7-3.el7_9 will be installed
+--> Processing Dependency: attr >= 2.0.0 for package: xfsdump-3.1.7-3.el7_9.x86_64
+--> Running transaction check
+---> Package attr.x86_64 0:2.4.46-13.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+========================================================================================================================
+ Package                    Arch                      Version                          Repository                  Size
+========================================================================================================================
+Installing:
+ xfsdump                    x86_64                    3.1.7-3.el7_9                    updates                    309 k
+Installing for dependencies:
+ attr                       x86_64                    2.4.46-13.el7                    base                        66 k
+
+Transaction Summary
+========================================================================================================================
+Install  1 Package (+1 Dependent package)
+
+Total download size: 374 k
+Installed size: 1.1 M
+Downloading packages:
+(2/2): xfsdump-3.1.7-3.el7_9.x86_64.rpm       0% [                                    ]  0.0 B/s |    0 B  --:--:-- ETA warning: /var/cache/yum/x86_64/7/base/packages/attr-2.4.46-13.el7.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
+Public key for attr-2.4.46-13.el7.x86_64.rpm is not installed
+(1/2): attr-2.4.46-13.el7.x86_64.rpm                                                             |  66 kB  00:00:01     
+(2/2): xfsdump-3.1.7-3.el7_9.x86_64.rpm       17% [======                             ]  0.0 B/s |  66 kB  --:--:-- ETA Public key for xfsdump-3.1.7-3.el7_9.x86_64.rpm is not installed
+(2/2): xfsdump-3.1.7-3.el7_9.x86_64.rpm                                                          | 309 kB  00:00:01     
+------------------------------------------------------------------------------------------------------------------------
+Total                                                                                   174 kB/s | 374 kB  00:00:02     
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Importing GPG key 0xF4A80EB5:
+ Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
+ Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5
+ Package    : centos-release-7-5.1804.el7.centos.x86_64 (@anaconda)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : attr-2.4.46-13.el7.x86_64 [                                                                        ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [####                                                                    ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [############                                                            ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [###################                                                     ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [#####################                                                   ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [############################                                            ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [##############################                                          ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [####################################                                    ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [######################################                                  ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [#############################################                           ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [##############################################                          ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [################################################                        ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [###################################################                     ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [#####################################################                   ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [#######################################################                 ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [##########################################################              ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [############################################################            ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [##############################################################          ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [#################################################################       ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [###################################################################     ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [#####################################################################   ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [######################################################################  ] 1/2  Installing : attr-2.4.46-13.el7.x86_64 [####################################################################### ] 1/2  Installing : attr-2.4.46-13.el7.x86_64                                                                            1/2 
+  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [                                                                     ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [####                                                                 ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [########                                                             ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [#############                                                        ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [#################                                                    ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [####################                                                 ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [#########################                                            ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [##############################                                       ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [##################################                                   ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [#######################################                              ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [############################################                         ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [################################################                     ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [###################################################                  ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [#####################################################                ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [######################################################               ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [#######################################################              ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [###########################################################          ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [#############################################################        ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [#################################################################    ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [##################################################################   ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [###################################################################  ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64 [#################################################################### ] 2/2  Installing : xfsdump-3.1.7-3.el7_9.x86_64                                                                         2/2 
+  Verifying  : attr-2.4.46-13.el7.x86_64                                                                            1/2 
+  Verifying  : xfsdump-3.1.7-3.el7_9.x86_64                                                                         2/2 
+
+Installed:
+  xfsdump.x86_64 0:3.1.7-3.el7_9                                                                                        
+
+Dependency Installed:
+  attr.x86_64 0:2.4.46-13.el7                                                                                           
+
+Complete!
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# lsblk
+NAME                    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                       8:0    0   40G  0 disk 
+├─sda1                    8:1    0    1M  0 part 
+├─sda2                    8:2    0    1G  0 part /boot
+└─sda3                    8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00 253:0    0 37.5G  0 lvm  /
+  └─VolGroup00-LogVol01 253:1    0  1.5G  0 lvm  [SWAP]
+sdb                       8:16   0   10G  0 disk 
+sdc                       8:32   0    2G  0 disk 
+sdd                       8:48   0    1G  0 disk 
+sde                       8:64   0    1G  0 disk 
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# df -h
+Filesystem                       Size  Used Avail Use% Mounted on
+/dev/mapper/VolGroup00-LogVol00   38G  874M   37G   3% /
+devtmpfs                         109M     0  109M   0% /dev
+tmpfs                            118M     0  118M   0% /dev/shm
+tmpfs                            118M  4.6M  114M   4% /run
+tmpfs                            118M     0  118M   0% /sys/fs/cgroup
+/dev/sda2                       1014M   63M  952M   7% /boot
+tmpfs                             24M     0   24M   0% /run/user/0
+tmpfs                             24M     0   24M   0% /run/user/1000
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# pvcreate /dev/sda3 [K[K[Kb
+  Physical volume "/dev/sdb" successfully created.
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# vgcreate vg_root /dev/sdb
+  Volume group "vg_root" successfully created
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# lvcreate -n L[Klv_root -l +100%FREE /dev/vg_root
+  Logical volume "lv_root" created.
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# mfs.xfs /dev/vg_root_lv[K[K[K/lv_root
+bash: mfs.xfs: command not found
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# mfs.xfs /dev/vg_root/lv_root[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1@k
+meta-data=/dev/vg_root/lv_root   isize=512    agcount=4, agsize=655104 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=2620416, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# mount /dev/vg_root/lv_root /mnt
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# df -h
+Filesystem                       Size  Used Avail Use% Mounted on
+/dev/mapper/VolGroup00-LogVol00   38G  873M   37G   3% /
+devtmpfs                         109M     0  109M   0% /dev
+tmpfs                            118M     0  118M   0% /dev/shm
+tmpfs                            118M  4.6M  114M   4% /run
+tmpfs                            118M     0  118M   0% /sys/fs/cgroup
+/dev/sda2                       1014M   63M  952M   7% /boot
+tmpfs                             24M     0   24M   0% /run/user/0
+tmpfs                             24M     0   24M   0% /run/user/1000
+/dev/mapper/vg_root-lv_root       10G   33M   10G   1% /mnt
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# lvs
+  LV       VG         Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  LogVol00 VolGroup00 -wi-ao---- <37.47g                                                    
+  LogVol01 VolGroup00 -wi-ao----   1.50g                                                    
+  lv_root  vg_root    -wi-ao---- <10.00g                                                    
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# xfsdump -J - /dev/VolGroup00/LogVol00 | xfsrestore -J - /mnt
+xfsdump: using file dump (drive_simple) strategy
+xfsdump: version 3.1.7 (dump format 3.0)
+xfsdump: level 0 dump of lvm:/
+xfsdump: dump date: Fri Dec  1 10:36:36 2023
+xfsdump: session id: 2474c174
