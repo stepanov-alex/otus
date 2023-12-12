@@ -1,0 +1,38 @@
+Script started on 2023-12-11 11:39:59-05:00
+]0;root@otus-1:/home/vagrant[root@otus-1 vagrant]# lsblk
+NAME                MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                   8:0    0   10G  0 disk 
+|-sda1                8:1    0    1G  0 part /boot
+`-sda2                8:2    0    9G  0 part 
+  |-cs_otus--1-root 253:0    0    8G  0 lvm  /
+  `-cs_otus--1-swap 253:1    0    1G  0 lvm  [SWAP]
+sr0                  11:0    1 1024M  0 rom  
+]0;root@otus-1:/home/vagrant[root@otus-1 vagrant]# vgs
+  VG        #PV #LV #SN Attr   VSize  VFree
+  cs_otus-1   1   2   0 wz--n- <9.00g    0 
+]0;root@otus-1:/home/vagrant[root@otus-1 vagrant]# vgdisplay 
+  --- Volume group ---
+  VG Name               cs_otus-1
+  System ID             
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  3
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                2
+  Open LV               2
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               <9.00 GiB
+  PE Size               4.00 MiB
+  Total PE              2303
+  Alloc PE / Size       2303 / <9.00 GiB
+  Free  PE / Size       0 / 0   
+  VG UUID               7HStfF-G5a6-TERl-S9He-W4MC-Gpyq-qe0Jbe
+   
+]0;root@otus-1:/home/vagrant[root@otus-1 vagrant]# exit
+exit
+
+Script done on 2023-12-11 11:40:12-05:00

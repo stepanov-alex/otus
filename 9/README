@@ -1,0 +1,70 @@
+1.	Задание выполнить переименование lvm группы при попадании в систему без пароля.
+	 В файле before лежить как было, в файле after как стало после редактирования.
+	Для входа в систему без пароля через grub menu радктируем через клавишу "e", находи 'ro' заменяем 'rw init=/sysroot/bin/sh'
+	при загрузке попадем в шел.
+	Монтируем нужные разделы
+
+	mount -t proc none /sysroot/proc
+	mount -bind /sys /sysroot/sys
+	mount -bind /dev /sysroot/dev
+
+	chroot /sysroot
+	mount /dev/sda1 /boot #монтируем boot
+
+	vgrename cs_otus-1 OtusRoot
+	Далее правим /etc/fstab, /etc/default/grub, /boot/grub2/grub.cfg. Везде заменāем старое название на новое.
+	Далее пересоздаем конфиг grub
+	grub2-mkconfig -o /boot/grub2/grub.cfg
+	Пересоздаем initrd image, чтобý он знал новое название Volume Group
+	mkinitrd -f -v /boot/initramfs-$(uname -r).img
+	перезагружаемся
+	смотрим получилось или нет (уменя это файли after) 
+
+2. Добавить модуль в initrd
+	mkdir /usr/lib/dracut/modules.d/01test
+
+	добавляем в папку 01test два файла module-setup.sh и test.sh
+	cat >> module-setup.sh << EOF
+	#!/bin/bash
+
+	check() {
+		return 0
+	}
+
+	depends() {
+		return 0
+	}
+
+	install() {
+		inst_hook cleanup 00 "${moddir}/test.sh"
+	}
+	EOF
+
+	cat >> test.sh << EOF
+	#!/bin/bash
+
+	exec 0<>/dev/console 1<>/dev/console 2<>/dev/console
+	cat <<'msgend'
+	Hello! You are in dracut module!
+	 ___________________
+	< I'm dracut module >
+	 -------------------
+	   \
+		\
+			.--.
+		   |o_o |
+		   |:_/ |
+		  //   \ \
+		 (|     | )
+		/'\_   _/`\
+		\___)=(___/
+	msgend
+	sleep 10
+	echo " continuing...."
+	EOF
+
+	Пересоздаем initrd image, dracut -f -v
+	редактируем /etc/default/grub , удалеяем rghb и quiet и пересоздаем grub 
+	перезагружаемся
+	должно получиться как на скриншоте.
+На этом задание выполнено.
