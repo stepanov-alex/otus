@@ -1,0 +1,87 @@
+---
+- hosts: all # part running on all hosts
+  become: true
+  tasks:
+  - name: install package yum-utils
+    yum:
+      name: yum-utils
+      state: present
+
+  - name: Add repository docker
+    shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    args:
+      creates: /etc/yum.repos.d/docker-ce.repo
+
+  - name: install packages # переведём синтаксис yum из deprecated 
+    yum:
+      name: "{{ packages }}"
+      state: present
+    vars:
+      packages:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+      - util-linux
+
+- hosts: pam # server pam provision
+  become: true
+  tasks:
+  - name: copy 00-access.rules
+    copy:
+      src: polkit/00-access.rules
+      dest: /etc/polkit-1/rules.d/00-access.rules
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: copy 01-systemd.rules 
+    copy:
+      src: polkit/01-systemd.rules
+      dest: /etc/polkit-1/rules.d/01-systemd.rules
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: copy login.sh 
+    copy:
+      src: login.sh
+      dest: /usr/local/bin/login.sh
+      owner: root
+      group: root
+      mode: 0744
+
+  - name: copy sshd
+    copy:
+      src: sshd
+      dest: /etc/pam.d/sshd
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: Ensure group "admins" exists
+    ansible.builtin.group:
+      name: admins
+      state: present
+
+  - name: Add user vagrant to group admins
+    ansible.builtin.user:
+      name: vagrant
+      groups: admins
+      append: yes
+
+  - name: Add the user 'otusadm' with a bash shell, appending the group 'admins' to the user's groups
+    ansible.builtin.user:
+      name: otusadm
+      password: "{{ 'Otus2022!' | password_hash('sha512') }}"
+      shell: /bin/bash
+      groups: admins
+      append: yes
+
+  - name: Add the user 'otus'
+    ansible.builtin.user:
+      name: otus
+      password: "{{ 'Otus2022!' | password_hash('sha512') }}"
+      shell: /bin/bash
+      state: present
