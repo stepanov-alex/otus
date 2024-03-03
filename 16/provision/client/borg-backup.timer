@@ -1,0 +1,9 @@
+[Unit]
+Description=Borg Backup
+
+[Timer]
+OnUnitActiveSec=5min
+Unit=borgservice.service
+
+[Install]
+WantedBy=timers.target

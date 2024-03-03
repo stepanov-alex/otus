@@ -1,0 +1,94 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: install epel-release
+    yum:
+      name: epel-release
+      state: present
+
+- hosts: all
+  become: true
+  tasks:
+  - name: install borgbackup
+    yum:
+      name: borgbackup
+      state: present
+
+- hosts: backup 
+  become: true
+  tasks:
+  - name: install parted
+    yum:
+      name: parted
+      state: present
+
+  - name: Add user Borg 
+    ansible.builtin.user:
+      name: borg
+      shell: /bin/bash
+      state: present
+
+  - name: Run script disk.sh
+    ansible.builtin.script: ./provision/disk.sh
+      
+  - name: Create directory for ssh
+    ansible.builtin.file:
+      path: /home/borg/.ssh
+      state: directory
+      mode: '0740'
+      owner: borg
+      group: borg
+
+  - name: copy authorized_keys
+    copy:
+      src: ./provision/backup/authorized_keys
+      dest: /home/borg/.ssh/authorized_keys
+      owner: borg
+      group: borg
+      mode: '0640'
+
+
+- hosts: client 
+  become: true
+  tasks:
+  - name: Create directory for ssh
+    ansible.builtin.file:
+      path: /root/.ssh
+      state: directory
+      mode: '0740'
+
+  - name: copy id_rsa
+    copy:
+      src: ./provision/client/ssh/id_rsa
+      dest: /root/.ssh/id_rsa
+      mode: '0600'
+
+  - name: copy id_rsa.pub
+    copy:
+      src: ./provision/client/ssh/id_rsa.pub
+      dest: /root/.ssh/id_rsa.pub
+
+  - name: copy borg-backup.timer
+    copy:
+      src: ./provision/client/borg-backup.timer
+      dest: /etc/systemd/system/borg-backup.timer
+
+  - name: copy borgservice.service
+    copy:
+      src: ./provision/client/borgservice.service
+      dest: /etc/systemd/system/borgservice.service
+        
+  - name: Run script init borg
+    ansible.builtin.script: ./provision/borginit.sh
+
+  - name: enable borg timer
+    ansible.builtin.service:
+      name: borg-backup.timer
+      state: started
+      enabled: yes
+
+  - name: start borgservice
+    ansible.builtin.service:
+      name: borgservice
+      state: started
