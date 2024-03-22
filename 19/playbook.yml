@@ -1,0 +1,91 @@
+---
+- hosts: inetRouter 
+  become: true
+  tasks:
+  - name: copy firewall rules
+    copy:
+      src: ./inetrouter/nftables.conf
+      dest: /etc/sysconfig/nftables.conf
+      mode: '0644'
+    notify:
+      - start nftables
+
+  - name: set forwarding 
+    ansible.posix.sysctl:
+      name: net.ipv4.ip_forward
+      value: '1'
+      sysctl_set: true
+      state: present
+      reload: true
+
+  handlers:
+  - name: start nftables
+    ansible.builtin.service:
+      name: nftables
+      state: started
+
+- hosts: inetRouter2 
+  become: true
+  tasks:
+  - name: copy firewall rules
+    copy:
+      src: ./inetrouter2/nftables.conf
+      dest: /etc/sysconfig/nftables.conf
+      mode: '0644'
+    notify:
+      - start nftables
+
+  - name: set forwarding 
+    ansible.posix.sysctl:
+      name: net.ipv4.ip_forward
+      value: '1'
+      sysctl_set: true
+      state: present
+      reload: true
+
+  handlers:
+  - name: start nftables
+    ansible.builtin.service:
+      name: nftables
+      state: started
+
+
+- hosts: centralServer
+  become: true
+  tasks:
+  - name: copy firewall rules
+    copy:
+      src: ./centralServer/knock.sh
+      dest: /bin/knock
+      mode: '0755'
+
+
+  - name: install nmap
+    ansible.builtin.dnf:
+      name: nmap
+      state: latest
+
+  - name: install nginx
+    ansible.builtin.dnf:
+      name: nginx
+      state: latest
+    notify:
+      - delete ipv6
+      - start nginx
+      - Set the default route
+
+
+  handlers:
+  - name: delete ipv6
+    ansible.builtin.shell:
+      cmd: sed -i /\[::\]/d /etc/nginx/nginx.conf
+      warn: false
+
+  - name: Set the default route
+    ansible.builtin.shell:
+      cmd: ip route del default && ip route add default via 192.168.50.20
+
+  - name: start nginx
+    ansible.builtin.service:
+      name: nginx
+      state: started
