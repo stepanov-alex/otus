@@ -1,0 +1,72 @@
+---
+- name: OSPF
+  hosts: all
+  become: yes
+  vars_files:
+    - main.yml
+  tasks:
+  - name: install base tools
+    ansible.builtin.dnf:
+      name:
+        - vim
+        - traceroute
+        - tcpdump
+        - net-tools
+      state: present
+            
+  - name: Copy frr-stable-repo-1-0.el8.noarch.rpm
+    ansible.builtin.copy:
+      src: ./frr-stable-repo-1-0.el8.noarch.rpm
+      dest: /home/vagrant
+      owner: root
+      group: root
+      mode: '0755'
+      
+  - name: Install frr.
+    ansible.builtin.shell:
+        cmd: dnf -y install /home/vagrant/frr-stable-repo-1-0.el8.noarch.rpm
+      
+  - name: install FRR packages
+    ansible.builtin.dnf:
+      name: 
+        - frr
+        - frr-pythontools
+      state: present
+      
+  - name: set up forward packages across routers
+    ansible.posix.sysctl:
+      name: net.ipv4.conf.all.forwarding
+      value: '1'
+      state: present
+      
+  - name: set up asynchronous routing
+    ansible.posix.sysctl:
+      name: net.ipv4.conf.all.rp_filter
+      value: '0'
+      state: present
+    
+  - name: base set up OSPF 
+    ansible.builtin.template:
+      src: daemons
+      dest: /etc/frr/daemons
+      owner: frr
+      group: frr
+      mode: 0640
+      
+  - name: set up OSPF 
+    ansible.builtin.template:
+      src: frr.conf.j2
+      dest: /etc/frr/frr.conf
+      owner: frr
+      group: frr
+      mode: 0640
+    tags:
+      - setup_ospf
+      
+  - name: restart FRR
+    service:
+      name: frr
+      state: restarted
+      enabled: true
+    tags:
+      - setup_ospf

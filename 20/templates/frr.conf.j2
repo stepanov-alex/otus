@@ -1,0 +1,45 @@
+frr version 9.1
+frr defaults traditional
+hostname {{ ansible_hostname }}
+log file /var/log/frr/frr.log
+log syslog informational
+!
+interface enp0s8
+ description {{ description1 }}
+ ip address {{ ip1 }}
+{% if ansible_hostname == 'router1' %}
+ ip ospf cost 1000
+{% elif ansible_hostname == 'router2' and symmetric_routing == true %}
+ ip ospf cost 1000
+{% else %}
+ !ip ospf cost 450
+{% endif %}
+ ip ospf dead-interval 30
+ ip ospf mtu-ignore
+exit
+!
+interface enp0s9
+ description {{ description2 }}
+ ip address {{ ip2 }}
+ !ip ospf cost 450
+ ip ospf dead-interval 30
+ ip ospf mtu-ignore
+exit
+!
+interface enp0s10
+ description {{ description3 }}
+ ip address {{ ip3 }}
+ !ip ospf cost 45
+ ip ospf dead-interval 30
+ ip ospf mtu-ignore
+exit
+!
+router ospf
+ ospf router-id {{ routerid }}
+ network {{ network1 }} area 0
+ network {{ network2 }} area 0
+ network {{ network3 }} area 0
+ neighbor {{ neighbor1 }}
+ neighbor {{ neighbor2 }}
+exit
+!

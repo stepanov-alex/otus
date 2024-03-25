@@ -1,0 +1,53 @@
+all:
+  hosts:
+   router1:
+    ansible_host: 192.168.50.10
+    ansible_user: vagrant
+    ansible_ssh_private_key_file: .vagrant/machines/router1/virtualbox/private_key
+    description1: r1-r2
+    description2: r1-r3
+    description3: net_router1
+    ip1: 10.0.10.1/30  
+    ip2: 10.0.12.1/30
+    ip3: 192.168.10.1/24
+    routerid: 1.1.1.1
+    network1: 10.0.10.0/30
+    network2: 10.0.12.0/30
+    network3: 192.168.10.0/24
+    neighbor1: 10.0.10.2
+    neighbor2: 10.0.12.2
+    
+   router2:
+    ansible_host: 192.168.50.11
+    ansible_user: vagrant
+    ansible_ssh_private_key_file: .vagrant/machines/router2/virtualbox/private_key
+    description1: r2-r1
+    description2: r2-r3
+    description3: net_router2
+    ip1: 10.0.10.2/30
+    ip2: 10.0.11.2/30
+    ip3: 192.168.20.1/24
+    routerid: 2.2.2.2
+    network1: 10.0.10.0/30
+    network2: 10.0.11.0/30
+    network3: 192.168.20.0/24
+    neighbor1: 10.0.10.1
+    neighbor2: 10.0.11.1
+    
+   router3:
+    ansible_host: 192.168.50.12
+    ansible_user: vagrant
+    ansible_ssh_private_key_file: .vagrant/machines/router3/virtualbox/private_key
+    description1: r3-r2
+    description2: r3-r1
+    description3: net_router3
+    ip1: 10.0.11.1/30
+    ip2: 10.0.12.2/30
+    ip3: 192.168.30.1/24
+    routerid: 3.3.3.3
+    network1: 10.0.11.0/30
+    network2: 10.0.12.0/30
+    network3: 192.168.30.0/24
+    neighbor1: 10.0.11.2
+    neighbor2: 10.0.12.1
+    
