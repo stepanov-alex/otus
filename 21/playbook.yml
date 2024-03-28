@@ -1,0 +1,59 @@
+---
+- name: OpenVPN
+  hosts: all
+  become: yes
+  tasks:
+  - name: Disable selinux
+    ansible.builtin.shell:
+      cmd: setenforce 0
+
+  - name: install Epel-Release
+    ansible.builtin.dnf:
+      name:
+        - epel-release
+
+  - name: install OpenVPN
+    ansible.builtin.dnf:
+      name:
+        - epel-release
+        - openvpn
+        - iperf3
+        - easy-rsa
+
+  - name: copy system service
+    ansible.builtin.template:
+      src: templates/openvpn.service.j2 
+      dest: /etc/systemd/system/openvpn.service
+
+- hosts: server
+  become: yes
+  tasks:
+  - name: server-openvpn
+    ansible.builtin.copy:
+      src: ./server/
+      dest: /etc/openvpn/
+      owner: root
+      group: openvpn
+      mode: '0644'
+
+  - name: start openvpn start
+    ansible.builtin.service:
+      name: openvpn
+      state: started
+
+- hosts: client
+  become: yes
+  tasks:
+  - name: client-openvpn
+    ansible.builtin.copy:
+      src: ./client/
+      dest: /etc/openvpn/
+      owner: root
+      group: openvpn
+      mode: '0644'
+
+  - name: start openvpn start
+    ansible.builtin.service:
+      name: openvpn
+      state: started
+      

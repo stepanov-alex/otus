@@ -1,0 +1,9 @@
+[Unit]
+Description=OpenVPN Tunneling Application on %I
+After=network.target
+[Service]
+Type=notify
+PrivateTmp=true
+ExecStart=/usr/sbin/openvpn --cd /etc/openvpn --config {{ file }}.conf
+[Install]
+WantedBy=multi-user.target
