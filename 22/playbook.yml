@@ -1,0 +1,95 @@
+---
+- name: Bind
+  hosts: servers
+  become: yes
+  tasks:
+  - name: Disable selinux
+    ansible.builtin.shell:
+      cmd: setenforce 0
+      
+  - name: install Bind
+    ansible.builtin.dnf:
+      name:
+        - bind
+        - bind-utils
+      
+  - name: restart bind
+    ansible.builtin.service:
+      name: named
+      state: restarted
+
+- hosts: all
+  become: yes
+  tasks:
+  - name: copy network file
+    ansible.builtin.copy:
+      src: ./templates/ifcfg-enp0s3.conf
+      dest: /etc/sysconfig/network-scripts/ifcfg-enp0s3
+      owner: root
+      group: root
+      mode: '0644'
+
+  - name: copy network file
+    ansible.builtin.copy:
+      src: ./templates/resolv.conf
+      dest: /etc/resolv.conf
+      owner: root
+      group: root
+      mode: '0644'
+
+- hosts: ns01
+  become: yes
+  tasks:
+  - name: copy bind conf
+    ansible.builtin.copy:
+      src: ./ns01/named.conf
+      dest: /etc/named.conf
+      owner: root
+      group: named
+      mode: '0664'
+
+  - name: copy bind named
+    ansible.builtin.copy:
+      src: ./ns01/named/
+      dest: /etc/named/
+      owner: root
+      group: named
+      mode: '0774'
+
+  - name: restart bind
+    ansible.builtin.service:
+      name: named
+      state: restarted
+
+- hosts: ns02
+  become: yes
+  tasks:
+  - name: copy bind conf
+    ansible.builtin.copy:
+      src: ./ns02/named.conf
+      dest: /etc/named.conf
+      owner: root
+      group: named
+      mode: '0664'
+
+  - name: copy bind db
+    ansible.builtin.copy:
+      src: ./ns02/namedb/
+      dest: /etc/namedb/
+      owner: root
+      group: named
+      mode: '0664'
+
+  - name: copy bind named
+    ansible.builtin.copy:
+      src: ./ns02/named/
+      dest: /etc/named/
+      owner: root
+      group: named
+      mode: '0774'
+    
+  - name: restart bind
+    ansible.builtin.service:
+      name: named
+      state: restarted
+

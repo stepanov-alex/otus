@@ -1,0 +1,47 @@
+31-Mar-2024 13:14:00.092 zone dns.lab/IN/client: sending notifies (serial 1)
+31-Mar-2024 13:14:00.092 zone 50.168.192.in-addr.arpa/IN/default: sending notifies (serial 2024032901)
+31-Mar-2024 13:14:00.092 zone dns.lab/IN/default: sending notifies (serial 1)
+31-Mar-2024 13:14:00.093 zone newdns.lab/IN/default: sending notifies (serial 2711201008)
+31-Mar-2024 13:14:00.094 client @0x7f94240a1ca0 192.168.50.11#60735: view default: received notify for zone 'dns.lab'
+31-Mar-2024 13:14:00.101 zone newdns.lab/IN/client: sending notifies (serial 2711201008)
+31-Mar-2024 13:14:00.102 client @0x7f94240a1ca0 192.168.50.11#36688: view default: received notify for zone 'newdns.lab'
+31-Mar-2024 13:14:00.627 zone 50.168.192.in-addr.arpa/IN/client2: sending notifies (serial 2024032901)
+31-Mar-2024 13:14:00.628 zone dns.lab/IN/client2: sending notifies (serial 1)
+31-Mar-2024 13:14:00.629 client @0x7f94240a1ca0 192.168.50.11#52851: view default: received notify for zone 'dns.lab'
+31-Mar-2024 13:17:42.579 client @0x7f94240a1ca0 192.168.50.10#41843/key client-key: view client: received notify for zone 'dns.lab': TSIG 'client-key'
+31-Mar-2024 13:17:43.086 client @0x7f94240a1ca0 192.168.50.10#40365: view default: received notify for zone 'newdns.lab'
+31-Mar-2024 13:17:43.086 client @0x7f94240a1ca0 192.168.50.10#40365: view default: received notify for zone '50.168.192.in-addr.arpa'
+31-Mar-2024 13:17:43.086 client @0x7f94240a1ca0 192.168.50.10#40365: view default: received notify for zone 'dns.lab'
+31-Mar-2024 13:17:43.086 client @0x7f94240a1ca0 192.168.50.10#40365: view default: received notify for zone 'newdns.lab'
+31-Mar-2024 13:17:43.086 client @0x7f94240a1ca0 192.168.50.10#40365: view default: received notify for zone '50.168.192.in-addr.arpa'
+31-Mar-2024 13:17:43.087 client @0x7f94240a1ca0 192.168.50.10#40365/key client2-key: view client2: received notify for zone '50.168.192.in-addr.arpa': TSIG 'client2-key'
+31-Mar-2024 13:17:43.087 client @0x7f94240a1ca0 192.168.50.10#40365: view default: received notify for zone 'dns.lab'
+31-Mar-2024 13:17:43.087 client @0x7f94240a1ca0 192.168.50.10#40365/key client2-key: view client2: received notify for zone 'dns.lab': TSIG 'client2-key'
+31-Mar-2024 13:17:43.087 client @0x7f94240a1ca0 192.168.50.10#40365: view default: received notify for zone 'dns.lab'
+31-Mar-2024 13:17:43.087 client @0x7f94240a1ca0 192.168.50.10#40365/key client-key: view client: received notify for zone 'newdns.lab': TSIG 'client-key'
+31-Mar-2024 13:24:35.261 client @0x7f94240a1ca0 192.168.50.10#36101/key client-key: view client: received notify for zone 'dns.lab': TSIG 'client-key'
+31-Mar-2024 13:24:35.764 client @0x7f94240a1ca0 192.168.50.10#35148/key zonetransfer.key: view default: received notify for zone 'newdns.lab': TSIG 'zonetransfer.key'
+31-Mar-2024 13:24:35.764 client @0x7f94240a1ca0 192.168.50.10#35148/key zonetransfer.key: view default: received notify for zone 'dns.lab': TSIG 'zonetransfer.key'
+31-Mar-2024 13:24:35.765 client @0x7f94240a1ca0 192.168.50.10#35148/key zonetransfer.key: view default: received notify for zone '50.168.192.in-addr.arpa': TSIG 'zonetransfer.key'
+31-Mar-2024 13:24:35.765 client @0x7f94240a1ca0 192.168.50.10#35148/key zonetransfer.key: view default: received notify for zone '50.168.192.in-addr.arpa': TSIG 'zonetransfer.key'
+31-Mar-2024 13:24:35.765 client @0x7f94240a1ca0 192.168.50.10#35148/key zonetransfer.key: view default: received notify for zone '50.168.192.in-addr.arpa': TSIG 'zonetransfer.key'
+31-Mar-2024 13:24:35.765 client @0x7f94240a1ca0 192.168.50.10#35148/key zonetransfer.key: view default: received notify for zone 'dns.lab': TSIG 'zonetransfer.key'
+31-Mar-2024 13:24:35.765 client @0x7f94240a1ca0 192.168.50.10#35148/key client2-key: view client2: received notify for zone 'dns.lab': TSIG 'client2-key'
+31-Mar-2024 13:24:35.765 client @0x7f94240a1ca0 192.168.50.10#35148/key client-key: view client: received notify for zone '50.168.192.in-addr.arpa': TSIG 'client-key': not authoritative
+31-Mar-2024 13:24:35.766 client @0x7f94240a1ca0 192.168.50.10#35148/key client2-key: view client2: received notify for zone '50.168.192.in-addr.arpa': TSIG 'client2-key'
+31-Mar-2024 13:24:35.766 client @0x7f94240a1ca0 192.168.50.10#35148/key zonetransfer.key: view default: received notify for zone 'newdns.lab': TSIG 'zonetransfer.key'
+31-Mar-2024 13:24:36.266 client @0x7f94240a1ca0 192.168.50.10#48890/key client-key: view client: received notify for zone 'newdns.lab': TSIG 'client-key'
+31-Mar-2024 13:24:36.266 client @0x7f94240a1ca0 192.168.50.10#48890/key zonetransfer.key: view default: received notify for zone 'dns.lab': TSIG 'zonetransfer.key'
+31-Mar-2024 13:27:37.752 client @0x7f941c025e00 192.168.50.10#52022/key client-key: view client: received notify for zone 'newdns.lab': TSIG 'client-key'
+31-Mar-2024 13:27:38.253 client @0x7f941c025e00 192.168.50.10#41869/key zonetransfer.key: view default: received notify for zone 'dns.lab': TSIG 'zonetransfer.key'
+31-Mar-2024 13:27:38.253 client @0x7f941c025e00 192.168.50.10#41869/key zonetransfer.key: view default: received notify for zone '50.168.192.in-addr.arpa': TSIG 'zonetransfer.key'
+31-Mar-2024 13:27:38.254 client @0x7f941c025e00 192.168.50.10#41869/key zonetransfer.key: view default: received notify for zone 'newdns.lab': TSIG 'zonetransfer.key'
+31-Mar-2024 13:27:38.254 client @0x7f941c025e00 192.168.50.10#41869/key zonetransfer.key: view default: received notify for zone 'dns.lab': TSIG 'zonetransfer.key'
+31-Mar-2024 13:27:38.254 client @0x7f941c025e00 192.168.50.10#41869/key zonetransfer.key: view default: received notify for zone '50.168.192.in-addr.arpa': TSIG 'zonetransfer.key'
+31-Mar-2024 13:27:38.255 client @0x7f941c025e00 192.168.50.10#41869/key client2-key: view client2: received notify for zone '50.168.192.in-addr.arpa': TSIG 'client2-key'
+31-Mar-2024 13:27:38.255 client @0x7f941c025e00 192.168.50.10#41869/key zonetransfer.key: view default: received notify for zone 'dns.lab': TSIG 'zonetransfer.key'
+31-Mar-2024 13:27:38.255 client @0x7f941c025e00 192.168.50.10#41869/key client2-key: view client2: received notify for zone 'dns.lab': TSIG 'client2-key'
+31-Mar-2024 13:27:38.255 client @0x7f941c025e00 192.168.50.10#41869/key zonetransfer.key: view default: received notify for zone '50.168.192.in-addr.arpa': TSIG 'zonetransfer.key'
+31-Mar-2024 13:27:38.256 client @0x7f941c025e00 192.168.50.10#41869/key client-key: view client: received notify for zone '50.168.192.in-addr.arpa': TSIG 'client-key': not authoritative
+31-Mar-2024 13:27:38.753 client @0x7f941c025e00 192.168.50.10#41566/key client-key: view client: received notify for zone 'dns.lab': TSIG 'client-key'
+31-Mar-2024 13:27:38.753 client @0x7f941c025e00 192.168.50.10#41566/key zonetransfer.key: view default: received notify for zone 'newdns.lab': TSIG 'zonetransfer.key'

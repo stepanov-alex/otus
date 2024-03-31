@@ -1,0 +1,5 @@
+key "zonetransfer.key" {
+	algorithm HMAC-SHA512;
+	secret
+	"rbYZ7NYNOxwjF0rVEBjJZdfXXsuYxhrStt0VmtjLwNqpZn5Q/zir7r8qQ3ag5OX9f/phZ6QQuRGFOdC23YJy8Q==";
+};

@@ -1,0 +1,70 @@
+31-Mar-2024 13:14:00.052 managed-keys-zone/client: loaded serial 0
+31-Mar-2024 13:14:00.052 managed-keys-zone/client2: loaded serial 0
+31-Mar-2024 13:14:00.053 managed-keys-zone/default: journal file is out of date: removing journal file
+31-Mar-2024 13:14:00.053 managed-keys-zone/default: loaded serial 15
+31-Mar-2024 13:14:00.060 zone dns.lab/IN/client: loaded serial 1
+31-Mar-2024 13:14:00.071 zone 50.168.192.in-addr.arpa/IN/default: loaded serial 2024032901
+31-Mar-2024 13:14:00.076 zone 1.0.0.127.in-addr.arpa/IN/default: loaded serial 0
+31-Mar-2024 13:14:00.078 zone dns.lab/IN/default: loaded serial 1
+31-Mar-2024 13:14:00.084 zone newdns.lab/IN/default: loaded serial 2711201008
+31-Mar-2024 13:14:00.084 zone 0.in-addr.arpa/IN/default: loaded serial 0
+31-Mar-2024 13:14:00.085 zone localhost.localdomain/IN/default: loaded serial 0
+31-Mar-2024 13:14:00.085 zone 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa/IN/default: loaded serial 0
+31-Mar-2024 13:14:00.085 zone localhost/IN/default: loaded serial 0
+31-Mar-2024 13:14:00.086 all zones loaded
+31-Mar-2024 13:14:00.086 running
+31-Mar-2024 13:14:00.094 zone dns.lab/IN/default: refused notify from non-master: 192.168.50.11#60735
+31-Mar-2024 13:14:00.094 zone newdns.lab/IN/client: Transfer started.
+31-Mar-2024 13:14:00.100 zone newdns.lab/IN/client: transferred serial 2711201008: TSIG 'zonetransfer.key'
+31-Mar-2024 13:14:00.102 zone newdns.lab/IN/default: refused notify from non-master: 192.168.50.11#36688
+31-Mar-2024 13:14:00.129 managed-keys-zone/default: Key 20326 for zone . acceptance timer complete: key now trusted
+31-Mar-2024 13:14:00.130 resolver priming query complete
+31-Mar-2024 13:14:00.625 zone 50.168.192.in-addr.arpa/IN/client2: Transfer started.
+31-Mar-2024 13:14:00.625 zone dns.lab/IN/client2: Transfer started.
+31-Mar-2024 13:14:00.627 zone 50.168.192.in-addr.arpa/IN/client2: transferred serial 2024032901: TSIG 'zonetransfer.key'
+31-Mar-2024 13:14:00.628 zone dns.lab/IN/client2: transferred serial 1: TSIG 'zonetransfer.key'
+31-Mar-2024 13:14:00.629 zone dns.lab/IN/default: refused notify from non-master: 192.168.50.11#52851
+31-Mar-2024 13:17:19.075 zone 50.168.192.in-addr.arpa/IN/default: refresh: could not set file modification time of '/etc/named/named.dns.lab.rev': permission denied
+31-Mar-2024 13:17:42.579 zone dns.lab/IN/client: notify from 192.168.50.10#41843: serial 2024033001
+31-Mar-2024 13:17:42.581 zone dns.lab/IN/client: refresh: could not set file modification time of '/etc/named/named.dns.lab.client': permission denied
+31-Mar-2024 13:17:43.086 zone newdns.lab/IN/default: notify from 192.168.50.10#40365: zone is up to date
+31-Mar-2024 13:17:43.086 zone 50.168.192.in-addr.arpa/IN/default: notify from 192.168.50.10#40365: zone is up to date
+31-Mar-2024 13:17:43.086 zone dns.lab/IN/default: notify from 192.168.50.10#40365: zone is up to date
+31-Mar-2024 13:17:43.086 zone newdns.lab/IN/default: notify from 192.168.50.10#40365: zone is up to date
+31-Mar-2024 13:17:43.086 zone 50.168.192.in-addr.arpa/IN/default: notify from 192.168.50.10#40365: zone is up to date
+31-Mar-2024 13:17:43.087 zone 50.168.192.in-addr.arpa/IN/client2: notify from 192.168.50.10#40365: zone is up to date
+31-Mar-2024 13:17:43.087 zone dns.lab/IN/default: notify from 192.168.50.10#40365: zone is up to date
+31-Mar-2024 13:17:43.087 zone dns.lab/IN/client2: notify from 192.168.50.10#40365: zone is up to date
+31-Mar-2024 13:17:43.087 zone dns.lab/IN/default: notify from 192.168.50.10#40365: serial 2024033001
+31-Mar-2024 13:17:43.087 zone newdns.lab/IN/client: notify from 192.168.50.10#40365: zone is up to date
+31-Mar-2024 13:17:43.088 zone dns.lab/IN/default: refresh: could not set file modification time of '/etc/named/named.dns.lab': permission denied
+31-Mar-2024 13:20:22.090 zone newdns.lab/IN/default: refresh: could not set file modification time of '/etc/named/named.newdns.lab': permission denied
+31-Mar-2024 13:24:35.261 zone dns.lab/IN/client: notify from 192.168.50.10#36101: serial 2024033001
+31-Mar-2024 13:24:35.263 zone dns.lab/IN/client: refresh: could not set file modification time of '/etc/named/named.dns.lab.client': permission denied
+31-Mar-2024 13:24:35.764 zone newdns.lab/IN/default: notify from 192.168.50.10#35148: zone is up to date
+31-Mar-2024 13:24:35.764 zone dns.lab/IN/default: notify from 192.168.50.10#35148: zone is up to date
+31-Mar-2024 13:24:35.765 zone 50.168.192.in-addr.arpa/IN/default: notify from 192.168.50.10#35148: zone is up to date
+31-Mar-2024 13:24:35.765 zone 50.168.192.in-addr.arpa/IN/default: notify from 192.168.50.10#35148: zone is up to date
+31-Mar-2024 13:24:35.765 zone 50.168.192.in-addr.arpa/IN/default: notify from 192.168.50.10#35148: zone is up to date
+31-Mar-2024 13:24:35.765 zone dns.lab/IN/default: notify from 192.168.50.10#35148: zone is up to date
+31-Mar-2024 13:24:35.765 zone dns.lab/IN/client2: notify from 192.168.50.10#35148: zone is up to date
+31-Mar-2024 13:24:35.766 zone 50.168.192.in-addr.arpa/IN/client2: notify from 192.168.50.10#35148: zone is up to date
+31-Mar-2024 13:24:35.766 zone newdns.lab/IN/default: notify from 192.168.50.10#35148: zone is up to date
+31-Mar-2024 13:24:36.266 zone newdns.lab/IN/client: notify from 192.168.50.10#48890: zone is up to date
+31-Mar-2024 13:24:36.266 zone dns.lab/IN/default: notify from 192.168.50.10#48890: serial 2024033001
+31-Mar-2024 13:24:36.267 zone dns.lab/IN/default: refresh: could not set file modification time of '/etc/named/named.dns.lab': permission denied
+31-Mar-2024 13:25:19.914 resolver priming query complete
+31-Mar-2024 13:27:37.752 zone newdns.lab/IN/client: notify from 192.168.50.10#52022: zone is up to date
+31-Mar-2024 13:27:38.253 zone dns.lab/IN/default: notify from 192.168.50.10#41869: zone is up to date
+31-Mar-2024 13:27:38.253 zone 50.168.192.in-addr.arpa/IN/default: notify from 192.168.50.10#41869: zone is up to date
+31-Mar-2024 13:27:38.254 zone newdns.lab/IN/default: notify from 192.168.50.10#41869: zone is up to date
+31-Mar-2024 13:27:38.254 zone dns.lab/IN/default: notify from 192.168.50.10#41869: serial 2024033001
+31-Mar-2024 13:27:38.254 zone 50.168.192.in-addr.arpa/IN/default: notify from 192.168.50.10#41869: zone is up to date
+31-Mar-2024 13:27:38.255 zone 50.168.192.in-addr.arpa/IN/client2: notify from 192.168.50.10#41869: zone is up to date
+31-Mar-2024 13:27:38.255 zone dns.lab/IN/default: notify from 192.168.50.10#41869: zone is up to date
+31-Mar-2024 13:27:38.255 zone dns.lab/IN/default: refresh: could not set file modification time of '/etc/named/named.dns.lab': permission denied
+31-Mar-2024 13:27:38.255 zone dns.lab/IN/client2: notify from 192.168.50.10#41869: zone is up to date
+31-Mar-2024 13:27:38.255 zone 50.168.192.in-addr.arpa/IN/default: notify from 192.168.50.10#41869: zone is up to date
+31-Mar-2024 13:27:38.753 zone dns.lab/IN/client: notify from 192.168.50.10#41566: serial 2024033001
+31-Mar-2024 13:27:38.753 zone newdns.lab/IN/default: notify from 192.168.50.10#41566: zone is up to date
+31-Mar-2024 13:27:38.791 zone dns.lab/IN/client: refresh: could not set file modification time of '/etc/named/named.dns.lab.client': permission denied

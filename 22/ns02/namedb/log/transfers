@@ -1,0 +1,9 @@
+31-Mar-2024 13:14:00.096 transfer of 'newdns.lab/IN/client' from 192.168.50.10#53: connected using 192.168.50.11#53101 TSIG zonetransfer.key
+31-Mar-2024 13:14:00.100 transfer of 'newdns.lab/IN/client' from 192.168.50.10#53: Transfer status: success
+31-Mar-2024 13:14:00.100 transfer of 'newdns.lab/IN/client' from 192.168.50.10#53: Transfer completed: 1 messages, 8 records, 346 bytes, 0.004 secs (86500 bytes/sec)
+31-Mar-2024 13:14:00.625 transfer of '50.168.192.in-addr.arpa/IN/client2' from 192.168.50.10#53: connected using 192.168.50.11#54919 TSIG zonetransfer.key
+31-Mar-2024 13:14:00.626 transfer of 'dns.lab/IN/client2' from 192.168.50.10#53: connected using 192.168.50.11#43311 TSIG zonetransfer.key
+31-Mar-2024 13:14:00.627 transfer of '50.168.192.in-addr.arpa/IN/client2' from 192.168.50.10#53: Transfer status: success
+31-Mar-2024 13:14:00.627 transfer of '50.168.192.in-addr.arpa/IN/client2' from 192.168.50.10#53: Transfer completed: 1 messages, 6 records, 351 bytes, 0.001 secs (351000 bytes/sec)
+31-Mar-2024 13:14:00.628 transfer of 'dns.lab/IN/client2' from 192.168.50.10#53: Transfer status: success
+31-Mar-2024 13:14:00.628 transfer of 'dns.lab/IN/client2' from 192.168.50.10#53: Transfer completed: 1 messages, 8 records, 335 bytes, 0.001 secs (335000 bytes/sec)
