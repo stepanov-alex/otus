@@ -1,0 +1,58 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: install Utils
+    ansible.builtin.dnf:
+      name:
+        - tcpdump
+        - traceroute
+        - net-tools
+      state: present
+      update_cache: true
+
+- hosts: Clients
+  become: yes
+  tasks:
+  - name: Template vlan 
+    ansible.builtin.template:
+      src: ifcfg-clients.j2
+      dest: /etc/sysconfig/network-scripts/ifcfg-vlan{{vlanid}}
+      owner: root
+      group: wheel
+      mode: '0644'
+
+  - name: restart network
+    ansible.builtin.service:
+      name: NetworkManager
+      state: restarted
+
+- hosts: Routers
+  become: yes
+  tasks:
+  - name: Copy bonds
+    ansible.builtin.copy:
+      src: ./routes/
+      dest: /etc/sysconfig/network-scripts/
+      owner: root
+      group: root
+      mode: '0644'
+
+  - name: Template bond 
+    ansible.builtin.template:
+      src: ifcfg-bond0.j2
+      dest: /etc/sysconfig/network-scripts/ifcfg-bond0
+      owner: root
+      group: wheel
+      mode: '0644'
+
+  - name: restart network
+    ansible.builtin.service:
+      name: NetworkManager
+      state: restarted
+
+  - name: up bond interface
+    ansible.builtin.shell:
+      cmd: nmcli con up bond0 && nmcli con up bond-slave-enp0s8 && nmcli con up bond-slave-enp0s9 
+
+

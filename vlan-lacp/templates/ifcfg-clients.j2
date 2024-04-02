@@ -1,0 +1,14 @@
+VLAN=yes
+TYPE=Vlan
+PHYSDEV=enp0s8
+VLAN_ID={{vlanid}}
+VLAN_NAME_TYPE=DEV_PLUS_VID_NO_PAD
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=none
+IPADDR={{vlanaddr}}
+PREFIX=24
+NAME=vlan{{vlanid}}
+DEVICE=enp0s8.{{vlanid}}
+ONBOOT=yes
+

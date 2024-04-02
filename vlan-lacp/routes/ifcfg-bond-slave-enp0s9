@@ -1,0 +1,8 @@
+TYPE=Ethernet
+BOND_PORT_QUEUE_ID=0
+BOND_PORT_PRIO=0
+NAME=bond-slave-enp0s9
+DEVICE=enp0s9
+ONBOOT=yes
+MASTER=bond0
+SLAVE=yes
