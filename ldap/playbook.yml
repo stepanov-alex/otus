@@ -1,0 +1,66 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: Upgrade all packages
+    ansible.builtin.yum:
+      name: '*'
+      state: latest
+      update_cache: true
+
+  - name: Disable SELinux
+    ansible.posix.selinux:
+      state: disabled
+
+  - name: disable SElinux now
+    ansible.builtin.shell:
+      cmd: setenforce 0
+
+
+  - name: Copy hosts file
+    ansible.builtin.copy:
+      src: ./templates/hosts
+      dest: /etc/hosts
+      owner: root
+      group: root
+      mode: '0644'
+  - name: Set timezone to Europe/Moscow
+    community.general.timezone:
+      name: Europe/Moscow
+
+
+- hosts: ipa
+  become: yes
+  tasks:
+
+  - name: install IPA-Packet
+    ansible.builtin.yum:
+      name:
+        - ipa-server
+      state: present
+      update_cache: true
+
+  - name: install IPA-Server 
+    ansible.builtin.shell:
+      cmd: echo -e "no\nyes\nyes\n" | ipa-server-install -p qwertyasdf -a qwertyasdf -n otus.lan -r OTUS.LAN --hostname=ipa.otus.lan
+
+  - name: Add User Otus 
+    ansible.builtin.shell:
+      cmd: echo -e "qwertyasdf\n" | kinit admin && echo -e "Otus2024\nOtus2024\n" | ipa user-add otus-user --first=Otus --last=User --password
+
+- hosts: Clients
+  become: yes
+  tasks:
+  - name: install IPA-Packet
+    ansible.builtin.yum:
+      name:
+        - freeipa-client
+      state: present
+      update_cache: true
+
+  - name: install IPA-Client 
+    ansible.builtin.shell:
+      cmd: echo -e "yes\nyes\n" | ipa-client-install --mkhomedir --domain=OTUS.LAN --server=ipa.otus.lan --no-ntp -p admin -w qwertyasdf
+
+
+
