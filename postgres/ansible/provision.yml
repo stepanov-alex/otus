@@ -1,0 +1,36 @@
+---
+- name: Postgres
+  hosts: all
+  become: yes
+  tasks:
+
+  - name: install base tools
+    dnf:
+      name:
+        - vim
+        - telnet
+        - glibc-langpack-ru
+      state: present
+      update_cache: true
+
+  - name: install locale
+    shell:
+      cmd: localectl set-locale LANG=ru_RU.UTF8
+
+  - name: Import Keys
+    rpm_key:
+      state: present
+      key: 'https://download.postgresql.org/pub/repos/yum/keys/PGDG-RPM-GPG-KEY-RHEL' 
+  
+- name: install postgres 14 and set up replication
+  hosts: master,slave
+  become: yes
+  roles:
+   - install_postgres
+   - postgres_replication
+
+- name: set up backup
+  hosts: all
+  become: yes
+  roles:
+   - install_barman

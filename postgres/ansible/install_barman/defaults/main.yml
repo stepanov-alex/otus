@@ -1,0 +1,5 @@
+---
+master_ip: '192.168.57.10'
+master_user: 'postgres'
+barman_ip: '192.168.57.12'
+barman_user_password: '12345'

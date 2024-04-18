@@ -1,0 +1,14 @@
+listen_addresses =  'localhost, {{ansible_host}}'	
+port = 5432				
+password_encryption = scram-sha-256	
+wal_level = replica			
+max_wal_size = 1GB
+min_wal_size = 80MB
+max_wal_senders = 3
+max_replication_slots = 3
+hot_standby = on
+hot_standby_feedback = on
+log_timezone = 'UTC+3'
+datestyle = 'iso, dmy'
+timezone = 'UTC+3'
+default_text_search_config = 'pg_catalog.russian'
