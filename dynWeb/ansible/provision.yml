@@ -1,0 +1,57 @@
+---
+- name: DynWeb
+  hosts: all
+  become: yes
+  tasks:
+
+  - name: install base tools
+    dnf:
+      name:
+        - vim
+        - telnet
+        - glibc-langpack-ru
+        - yum-utils
+      state: present
+      update_cache: true
+
+  - name: install locale
+    shell:
+      cmd: localectl set-locale LANG=ru_RU.UTF8
+
+
+  - name: clean metadata 
+    shell:
+      cmd: dnf clean metadata
+        
+  - name: Add repository
+    shell:
+      cmd: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+  - name: Install packages 
+    dnf:
+      name: ['docker-ce','docker-ce-cli','containerd.io','docker-buildx-plugin','docker-compose-plugin'] 
+      state: present
+      update_cache: yes
+
+  - name: Make sure a service unit is running
+    service:
+      state: started
+      name: docker
+
+  - name: Add remote "vagrant" user to "docker" group
+    user:
+      name: vagrant
+      group: "docker"
+      append: yes
+
+  - name: Copy project 
+    copy: src=../project dest=/home/vagrant
+    
+  - name: reset ssh connection 
+    meta: reset_connection
+
+  - name: Run container
+    shell:
+      cmd: "docker compose up -d"
+      chdir: /home/vagrant/project
+ 
