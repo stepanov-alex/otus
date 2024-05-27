@@ -1,0 +1,70 @@
+---
+- name: Project
+  hosts: all
+  become: yes
+  tasks:
+
+  - name: install base tools
+    dnf:
+      name:
+        - vim
+        - telnet
+        - glibc-langpack-ru
+        - git
+      state: present
+      update_cache: true
+
+  - name: install locale
+    shell:
+      cmd: localectl set-locale LANG=ru_RU.UTF8
+
+  - name: install timezone
+    shell:
+      cmd: timedatectl set-timezone Europe/Moscow 
+
+- hosts: wordpress
+  become: yes
+  tasks: 
+  - name: Copy wordpess_dump.sql
+    copy:
+      src: files/wordpress/wordpress_dump.sql
+      dest: /home/vagrant/wordpress_dump.sql
+      owner: root
+      group: root
+      mode: '0644'
+
+  - name: install repo
+    shell: dnf -y install https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+
+  - name: disable old mysql module 
+    shell: dnf -y  module disable mysql
+
+  - name: Enable the Percona Server 5.7
+    shell: percona-release setup ps57
+
+  - name: install Percona-Server
+    dnf:
+      name:
+        - Percona-Server-server-57
+
+  - name: Copy file with owner and permissions
+    copy:
+      src: '{{ item }}'
+      dest: /etc/my.cnf.d/
+      owner: root
+      group: root
+      mode: '0644'
+    loop:
+      - files/base.cnf
+      - files/binlog.cnf
+      - files/max-connections.cnf
+      - files/perfomance.cnf
+      - files/slow-query.cnf
+
+  - name: start mysql service
+    service:
+      name: mysql
+      state: started
+
+  - name: Execute script
+    script: files/master.sh
