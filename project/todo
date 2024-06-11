@@ -1,7 +1,0 @@
-
-chcon -Rv -t httpd_sys_content_t /ush/share/nginx/wordpress
-
-setsebool -P httpd_can_network_connect 1
-setsebool -P httpd_graceful_shutdown 1
-setsebool -P httpd_can_networ_relay 1
-
