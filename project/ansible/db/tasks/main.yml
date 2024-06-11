@@ -1,0 +1,33 @@
+---
+# tasks file for db
+
+- name: Install maria-db repo
+  ansible.builtin.shell:
+    cmd: curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash
+
+- name: Install maria-db
+  ansible.builtin.dnf:
+    name:
+      - MariaDB-server
+      - galera-4
+      - MariaDB-client
+      - MariaDB-shared
+      - MariaDB-backup
+      - MariaDB-common
+    state: present
+
+- name: copy dump databases
+  ansible.builtin.copy:
+    src: files/db/all_backup.sql.gz
+    dest: /home/vagrant/all_backup.sql.gz
+    mode: '0644'
+
+- name: start mariadb
+  ansible.builtin.systemd:
+    state: started
+    name: mariadb
+    enabled: true
+
+- name: restore databases
+  ansible.builtin.shell:
+    cmd: zcat /home/vagrant/all_backup.sql.gz | mariadb

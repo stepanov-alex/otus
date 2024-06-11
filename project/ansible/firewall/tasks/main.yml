@@ -1,0 +1,36 @@
+---
+# tasks file for firewall
+- name: add zone dmz
+  ansible.posix.firewalld:
+    zone: dmz
+    interface: enp0s8
+    permanent: true
+    state: enabled
+
+- name: add zone public
+  ansible.posix.firewalld:
+    zone: public
+    interface: enp0s3
+    permanent: true
+    state: enabled
+
+- name: permit traffic in public-zone for ssh service
+  ansible.posix.firewalld:
+    zone: public
+    service: ssh
+    permanent: true
+    state: enabled
+
+- name: permit traffic in public-zone for http service
+  ansible.posix.firewalld:
+    zone: public
+    service: http
+    permanent: true
+    state: enabled
+
+- name: Redirect http to proxy
+  ansible.posix.firewalld:
+    rich: rule family=ipv4 forward-port port=80 destination address="192.168.57.11"
+    zone: public
+    permanent: true
+    state: enabled

@@ -1,0 +1,58 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure("2") do |config|
+
+    config.vm.box = "stepanovns/centos8-Minimal" 
+
+    config.vm.provider :virtualbox do |v|
+        v.memory = 2048
+        v.cpus = 2
+    end
+   
+    if Vagrant.has_plugin?("vagrant-vbguest")
+      config.vbguest.auto_update = false
+    end
+
+    boxes = [
+          { :name => "wordpress",
+            :ip => "192.168.57.100",
+          },
+          { :name => "proxy",
+            :ip => "192.168.57.101",
+          },
+          { :name => "db",
+            :ip => "192.168.57.102",
+          },
+          { :name => "zabbix",
+            :ip => "192.168.57.103",
+          },
+    ]
+
+     boxes.each do |opts|
+       config.vm.define opts[:name] do |config|
+       config.vm.hostname = opts[:name]
+       config.vm.network "private_network", ip: opts[:ip]
+
+     if config.vm.hostname == "zabbix"
+       config.vm.provision "ansible" do |ansible|
+        ansible.playbook = "ansible/ansible.yml"
+        ansible.host_key_checking = "False"
+        ansible.limit = "all"
+       end
+      end
+
+    end
+
+    end
+
+    config.vm.define "proxy" do |web|
+        web.vm.network "forwarded_port", guest:80, host:8080
+    end
+
+   # config.vm.define "wordpress" do |web|
+   #     web.vm.network "forwarded_port", guest:80, host:8082
+   # end
+
+
+
+end
