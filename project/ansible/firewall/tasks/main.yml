@@ -1,36 +1,43 @@
 ---
 # tasks file for firewall
-- name: add zone dmz
-  ansible.posix.firewalld:
-    zone: dmz
-    interface: enp0s8
-    permanent: true
-    state: enabled
 
-- name: add zone public
-  ansible.posix.firewalld:
-    zone: public
-    interface: enp0s3
-    permanent: true
-    state: enabled
+- name: Enable firewall
+  ansible.builtin.systemd:
+    name: firewalld
+    state: started
+    enabled: true
 
-- name: permit traffic in public-zone for ssh service
-  ansible.posix.firewalld:
-    zone: public
-    service: ssh
-    permanent: true
-    state: enabled
+- name: Change zone dmz
+  ansible.builtin.shell:
+    cmd: firewall-cmd --permanent --change-interface=enp0s8 --zone=dmz
 
-- name: permit traffic in public-zone for http service
+- name: Change zone trusted
+  ansible.builtin.shell:
+    cmd: firewall-cmd --permanent --change-interface=enp0s3 --zone=trusted
+
+- name: Change zone trusted
+  ansible.builtin.shell:
+    cmd: firewall-cmd --permanent --change-interface=enp0s9 --zone=work
+
+- name: Set masquerade
   ansible.posix.firewalld:
-    zone: public
-    service: http
-    permanent: true
+    zone: trusted
+    masquerade: yes
     state: enabled
+    permanent: true
 
 - name: Redirect http to proxy
   ansible.posix.firewalld:
-    rich: rule family=ipv4 forward-port port=80 destination address="192.168.57.11"
+    port_forward:
+      - port: 80
+        proto: tcp
+        toport: 80
+        toaddr: 192.168.57.101
     zone: public
     permanent: true
     state: enabled
+
+- name: Restart firewall
+  ansible.builtin.systemd:
+    name: firewalld
+    state: restarted

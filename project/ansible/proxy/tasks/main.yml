@@ -1,7 +1,7 @@
 ---
 # tasks file for proxy
 
-- name: Install Nginx Wordpress
+- name: Install Nginx 
   ansible.builtin.dnf:
     name: nginx
     state: latest

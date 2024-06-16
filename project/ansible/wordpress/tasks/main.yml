@@ -6,9 +6,15 @@
     name: nginx
     state: latest
 
+#  ansible.builtin.shell:
+       #- name: Installing Remi Repository
+#    cmd: dnf install -y https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+
 - name: Installing Remi Repository
-  ansible.builtin.shell:
-    cmd: dnf install -y https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+  ansible.builtin.dnf:
+    name: https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+    disable_gpg_check: true
+    state: present
 
 - name: Reset php module
   ansible.builtin.shell:
@@ -16,11 +22,10 @@
 
 - name: Install moduel remi php
   ansible.builtin.shell:
-    cmd: dnf module install php:remi-7.4 -y
+    cmd: dnf module enable php:remi-7.4 -y
 
 - name: Installing php
   ansible.builtin.dnf:
-    enablerepo: "rem,rem-php74"
     name:
       - php
       - php-common

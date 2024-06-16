@@ -28,6 +28,22 @@
     name: mariadb
     enabled: true
 
+- name: Set mysql_connect_any flag on
+  ansible.posix.seboolean:
+    name: mysql_connect_any
+    state: true
+    persistent: true
+
+- name: State wordpress db
+  stat: path=/var/lib/mysql/wordpress
+  register: installdb
+
 - name: restore databases
   ansible.builtin.shell:
     cmd: zcat /home/vagrant/all_backup.sql.gz | mariadb
+  when: not installdb.stat.exists
+
+- name: restart mariadb
+  ansible.builtin.systemd:
+    state: restarted
+    name: mariadb
