@@ -5,7 +5,7 @@ yum install epel-release -y && yum install spawn-fcgi php php-cli mod_fcgid http
 sed -i 's/#SOCKET/SOCKET/' /etc/sysconfig/spawn-fcgi
 sed -i 's/#OPTIONS/OPTIONS/' /etc/sysconfig/spawn-fcgi
 
-cat > /etc/systemd/system/spawn-fcgi.service << END
+cat >/etc/systemd/system/spawn-fcgi.service <<END
 [Unit]
 Description=Spawn-fcgi startup service by Otus
 After=network.target
@@ -14,7 +14,7 @@ After=network.target
 Type=simple
 PIDFile=/var/run/spawn-fcgi.pid
 EnvironmentFile=/etc/sysconfig/spawn-fcgi
-ExecStart=/usr/bin/spawn-fcgi -n \$OPTIONS
+c=/usr/bin/spawn-fcgi -n \$OPTIONS
 KillMode=process
 
 [Install]
@@ -23,3 +23,4 @@ END
 
 systemctl daemon-reload
 systemctl start spawn-fcgi
+

@@ -1,9 +1,0 @@
----
-# tasks file for route_client
-- name: Delete default route
-  ansible.builtin.shell:
-    cmd: ip route del default
-
-- name: Route add default to firewall-host
-  ansible.builtin.shell:
-    cmd: ip route add default via 192.168.100.254
