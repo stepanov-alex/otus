@@ -1,0 +1,125 @@
+---
+# tasks file for wordpress
+
+- name: Install Nginx Wordpress
+  ansible.builtin.dnf:
+    name: nginx
+    state: latest
+
+#  ansible.builtin.shell:
+       #- name: Installing Remi Repository
+#    cmd: dnf install -y https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+
+- name: Installing Remi Repository
+  ansible.builtin.dnf:
+    name: https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+    disable_gpg_check: true
+    state: present
+
+- name: Reset php module
+  ansible.builtin.shell:
+    cmd: dnf -y module reset php
+
+- name: Install moduel remi php
+  ansible.builtin.shell:
+    cmd: dnf module enable php:remi-7.4 -y
+
+- name: Installing php
+  ansible.builtin.dnf:
+    name:
+      - php
+      - php-common
+      - php-cli
+      - php-gd
+      - php-curl 
+      - php-mysqlnd
+      - php-fpm
+      - php-mysqli
+    state: latest
+
+- name: copy wordpress
+  ansible.builtin.copy:
+    src: files/wordpress/wordpress.tar.gz
+    dest: /var/www/html/
+    mode: '0644'
+
+- name: copy configs
+  ansible.builtin.copy:
+    src: files/ssl/wordpress
+    dest: /etc/pki/nginx/
+    mode: '0644'
+
+- name: copy nginx.conf wordpress
+  ansible.builtin.copy:
+    src: files/wordpress/nginx/nginx.conf
+    dest: /etc/nginx/
+    mode: '0644'
+
+- name: copy wp.conf wordpress
+  ansible.builtin.copy:
+    src: files/wordpress/nginx/wp.conf
+    dest: /etc/nginx/conf.d/
+    mode: '0644'
+
+- name: State directory wordpress.loc
+  stat: path=/var/www/html/wordpress.loc
+  register: wordpress_dir
+
+- name: State directory wordpress
+  stat: path=/var/www/html/wordpress
+  register: wordpress_stat
+
+- name: Extract wordpress archive
+  ansible.builtin.unarchive:
+    src: /var/www/html/wordpress.tar.gz
+    dest: /var/www/html/
+    remote_src: yes
+  when: not wordpress_stat.stat.exists
+
+- name: Make directory wordpress
+  command: cp -r /var/www/html/wordpress /var/www/html/wordpress.loc
+  when: not wordpress_dir.stat.exists
+
+- name: copy wp.conf wordpress
+  ansible.builtin.copy:
+    src: files/wordpress/wp-config.php
+    dest: /var/www/html/wordpress.loc/wp-config.php
+    mode: '0644'
+
+- name: Change owner directory wordpress
+  ansible.builtin.file:
+    path: /var/www/html/wordpress.loc
+    owner: root
+    group: root
+    recurse: yes
+    mode: 0755
+
+- name: Change context selinux wordpress
+  community.general.sefcontext:
+    target: '/var/www/html/wordpress.loc(/.*)?'
+    setype: httpd_sys_content_t
+    state: present
+
+- name: Set httpd_can_network_connect flag on
+  ansible.posix.seboolean:
+    name: httpd_can_network_connect
+    state: true
+    persistent: true
+
+- name: Set httpd_graceful_shutdown flag on
+  ansible.posix.seboolean:
+    name: httpd_graceful_shutdown 
+    state: true
+    persistent: true
+
+- name: Set httpd_can_network_connect_db flag on
+  ansible.posix.seboolean:
+    name: httpd_can_network_connect_db
+    state: true
+    persistent: true
+
+- name: Start nginx 
+  ansible.builtin.systemd:
+    state: started 
+    name: nginx
+    enabled: true

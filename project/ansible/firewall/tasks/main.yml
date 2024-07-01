@@ -1,0 +1,20 @@
+---
+# tasks file for firewall
+- name: Enable ipv4 forward
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: true
+
+- name: Copy nftables config
+  ansible.builtin.copy:
+    src: files/nftables/nftables.conf
+    dest: /etc/sysconfig/nftables.conf
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: Start nftables service
+  ansible.builtin.service:
+    name: nftables
+    state: started

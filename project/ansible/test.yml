@@ -1,0 +1,30 @@
+---
+- name: Test
+  hosts: client
+  become: yes
+  tasks:
+
+    #  - name: Change dnf repository vault on
+    #    ansible.builtin.shell:
+    #      cmd: sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+    #
+    #  - name: Change dnf repository mirrorlist off
+    #    ansible.builtin.shell:
+    #      cmd: sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+
+  - name: Find all files in yum.poers.d
+    ansible.builtin.find:
+      path: /etc/yum.repos.d/
+      pattern: 'CentOS-*'
+    register: centos_file
+
+  - name: Change dnf repository vault on
+    ansible.builtin.replace:
+      dest: "{{ item.path }}"
+      regexp: '#baseurl=http://mirror.centos.org'
+      replace: 'baseurl=http://vault.centos.org'
+    with_items: "{{centos_file.files}}"
+    #- name: Debug
+    #  ansible.builtin.debug:
+    #    msg: This "{{ centos_file.files.path }}"
+

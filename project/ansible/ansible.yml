@@ -1,0 +1,150 @@
+---
+- name: Project
+  hosts: all
+  become: yes
+  tasks:
+
+  - name: Change dnf repository vault on
+    ansible.builtin.shell:
+      cmd: sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+
+  - name: Change dnf repository mirrorlist off
+    ansible.builtin.shell:
+      cmd: sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+    #- name: Find all files in yum.repos.d
+    #  ansible.builtin.find:
+    #    path: /etc/yum.repos.d/
+    #    pattern: 'CentOS-*'
+    #  register: centos_file
+
+    #- name: Change dnf repository vault on
+    #  ansible.builtin.replace:
+    #    dest: "{{ item.path }}"
+    #    regexp: '#baseurl=http://mirror.centos.org'
+    #    replace: 'baseurl=http://vault.centos.org'
+    #  with_items: "{{ centos_file.files }}"
+    #  
+    #- name: Change dnf repository vault on
+    #  ansible.builtin.replace:
+    #    dest: "{{ item.path }}"
+    #    regexp: 'mirrorlist'
+    #    replace: '#mirrorist'
+    #  with_items: "{{ centos_file.files }}"
+
+  - name: install base tools
+    ansible.builtin.dnf:
+      name:
+        - vim
+        - telnet
+        - glibc-langpack-ru
+        - git
+      state: present
+      update_cache: true
+
+  - name: install locale
+    ansible.builtin.shell:
+      cmd: localectl set-locale LANG=ru_RU.UTF8
+
+  - name: Copy hosts
+    ansible.builtin.copy:
+      src: files/hosts
+      dest: /etc/hosts
+      mode: '0644'
+
+  - name: Copy zabbix package
+    ansible.builtin.copy:
+      src: files/zabbix/zabbix-agent.rpm
+      dest: /home/vagrant/
+      mode: '0644'
+
+  - name: Install Zabbix repo
+    ansible.builtin.dnf:
+      name: /home/vagrant/zabbix-agent.rpm
+      disable_gpg_check: true
+      state: present
+
+  - name: Install Zabbix agent
+    ansible.builtin.dnf:
+      name: zabbix-agent
+      state: present
+
+  - name: install timezone
+    ansible.builtin.shell:
+      cmd: timedatectl set-timezone Europe/Moscow 
+
+  - name: copy zabbix-agent config
+    ansible.builtin.copy:
+      src: files/zabbix_agentd.conf
+      dest: /etc/zabbix/zabbix_agentd.conf
+      mode: '0644'
+
+  - name: Set httpd_can_connect_zabbix flag on
+    ansible.posix.seboolean:
+      name: httpd_can_connect_zabbix
+      state: true
+      persistent: true
+
+  - name: Set zabbix_can_network flag on
+    ansible.posix.seboolean:
+      name: zabbix_can_network 
+      state: true
+      persistent: true
+
+  - name: Set zabbix_run_sudo flag on
+    ansible.posix.seboolean:
+      name: zabbix_run_sudo 
+      state: true
+      persistent: true
+
+  - name: Start zabbix agent service
+    ansible.builtin.systemd:
+      name: zabbix-agent
+      state: started
+      enabled: true
+
+- name: Firewall
+  hosts: firewall
+  become: yes
+  roles:
+  - firewall
+
+- name: ClientHost
+  hosts: client
+  become: yes
+  roles:
+  - route_client
+
+- name: DbHost
+  hosts: db
+  become: yes
+  roles:
+  - db
+  - route
+
+- name: ProxyHost
+  hosts: proxy
+  become: yes
+  roles:
+  - proxy
+  - route
+
+- name: WordpressHost
+  hosts: wordpress
+  become: yes
+  roles:
+  - wordpress
+  - route
+
+- name: LokiHost
+  hosts: loki
+  become: yes
+  roles:
+  - loki
+  - route
+
+- name: ZabbixHost
+  hosts: zabbix
+  become: yes
+  roles:
+  - zabbix
+  - route

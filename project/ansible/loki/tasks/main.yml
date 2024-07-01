@@ -1,0 +1,63 @@
+---
+# tasks file for loki
+
+- name: Copy loki package
+  ansible.builtin.copy:
+    src: files/loki/loki-3.0.0.x86_64.rpm
+    dest: /home/vagrant/loki.rpm
+    mode: '0644'
+
+- name: Copy grafana package
+  ansible.builtin.copy:
+    src: files/loki/grafana-enterprise-11.0.0-1.x86_64.rpm
+    dest: /home/vagrant/grafana.rpm
+    mode: '0644'
+
+- name: Copy promtail package
+  ansible.builtin.copy:
+    src: files/loki/promtail-3.0.0.x86_64.rpm
+    dest: /home/vagrant/promtail.rpm
+    mode: '0644'
+
+- name: Install loki
+  ansible.builtin.dnf:
+    name: /home/vagrant/loki.rpm
+    disable_gpg_check: true
+    state: present
+
+- name: Install promtail
+  ansible.builtin.dnf:
+    name: /home/vagrant/promtail.rpm
+    disable_gpg_check: true
+    state: present
+
+- name: Install grafana
+  ansible.builtin.dnf:
+    name: /home/vagrant/grafana.rpm
+    disable_gpg_check: true
+    state: present
+
+- name: Change /var/log/message group and permissions
+  ansible.builtin.file:
+    path: /var/log/messages
+    owner: root
+    group: promtail
+    mode: '0640'
+
+- name: Start loki service
+  ansible.builtin.systemd:
+    state: started
+    name: loki
+    enabled: true
+
+- name: Start promtail service
+  ansible.builtin.systemd:
+    state: started
+    name: promtail
+    enabled: true
+
+- name: Start grafana service
+  ansible.builtin.systemd:
+    state: started
+    name: grafana-server
+    enabled: true

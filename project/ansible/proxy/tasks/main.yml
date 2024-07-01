@@ -1,0 +1,85 @@
+---
+# tasks file for proxy
+
+- name: Install Nginx 
+  ansible.builtin.dnf:
+    name: nginx
+    state: latest
+
+- name: copy nginx.conf
+  ansible.builtin.copy:
+    src: files/proxy/nginx.conf
+    dest: /etc/nginx/nginx.conf
+    mode: '0644'
+
+- name: copy proxy.conf
+  ansible.builtin.copy:
+    src: files/proxy/proxy.conf
+    dest: /etc/nginx/conf.d/proxy.conf
+    mode: '0644'
+
+- name: copy certificate loki
+  ansible.builtin.copy:
+    src: files/ssl/loki
+    dest: /etc/pki/nginx/
+    mode: '0644'
+
+- name: copy certificate wordpress
+  ansible.builtin.copy:
+    src: files/ssl/wordpress
+    dest: /etc/pki/nginx/
+    mode: '0644'
+
+- name: copy certificate mon
+  ansible.builtin.copy:
+    src: files/ssl/mon
+    dest: /etc/pki/nginx/
+    mode: '0644'
+
+- name: Set httpd_can_network_connect flag on
+  ansible.posix.seboolean:
+    name: httpd_can_network_connect
+    state: true
+    persistent: true
+
+- name: Set httpd_graceful_shutdown flag on
+  ansible.posix.seboolean:
+    name: httpd_graceful_shutdown 
+    state: true
+    persistent: true
+
+- name: Set httpd_can_network_relay flag on
+  ansible.posix.seboolean:
+    name: httpd_can_network_relay 
+    state: true
+    persistent: true
+
+- name: Start nginx 
+  ansible.builtin.systemd:
+    state: started 
+    name: nginx
+    enabled: true
+
+- name: Start Zabbix-agent 
+  ansible.builtin.systemd:
+    state: started 
+    name: zabbix-agent
+    enabled: true
+
+- name: Copy promtail package
+  ansible.builtin.copy:
+    src: files/loki/promtail-3.0.0.x86_64.rpm
+    dest: /home/vagrant/promtail.rpm
+    mode: '0644'
+
+- name: Install promtail
+  ansible.builtin.dnf:
+    name: /home/vagrant/promtail.rpm
+    disable_gpg_check: true
+    state: present
+
+- name: Start promtail service
+  ansible.builtin.systemd:
+    state: started
+    name: promtail
+    enabled: true

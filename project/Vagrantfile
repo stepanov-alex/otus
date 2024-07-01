@@ -1,0 +1,73 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure("2") do |config|
+
+    config.vm.box = "stepanovns/centos8-Minimal" 
+
+    config.vm.provider :virtualbox do |v|
+        v.memory = 1024
+        v.cpus = 2
+    end
+   
+    if Vagrant.has_plugin?("vagrant-vbguest")
+      config.vbguest.auto_update = false
+    end
+
+    boxes = [
+          { :name => "wordpress",
+            :ip => "192.168.57.100", :adapter => 2, :netmask => "255.255.255.0", :virtualbox__intnet => "dmz"
+          },
+          { :name => "proxy",
+            :ip => "192.168.57.101", :adapter => 2, :netmask => "255.255.255.0", :virtualbox__intnet => "dmz"
+          },
+          { :name => "db",
+            :ip => "192.168.57.102", :adapter => 2, :netmask => "255.255.255.0", :virtualbox__intnet => "dmz"
+          },
+          { :name => "firewall",
+            :ip => "192.168.57.254", :adapter => 2, :netmask => "255.255.255.0", :virtualbox__intnet => "dmz"
+          },
+          { :name => "firewall",
+            :ip => "192.168.100.254", :adapter => 3, :netmask => "255.255.255.0", :virtualbox__intnet => "inner"
+          },
+          { :name => "firewall",
+            :ip => "10.160.30.254", :adapter => 4,
+          },
+          { :name => "zabbix",
+            :ip => "192.168.57.103", :adapter => 2, :netmask => "255.255.255.0", :virtualbox__intnet => "dmz"
+          },
+          { :name => "loki",
+            :ip => "192.168.57.104", :adapter => 2, :netmask => "255.255.255.0", :virtualbox__intnet => "dmz"
+          },
+          { :name => "client",
+            :ip => "192.168.100.22", :adapter => 2, :netmask => "255.255.255.0", :virtualbox__intnet => "inner"
+          },
+    ]
+
+     boxes.each do |opts|
+       config.vm.define opts[:name] do |config|
+       config.vm.hostname = opts[:name]
+       config.vm.network "private_network", ip: opts[:ip], adapter: opts[:adapter], netmask: opts[:netmask], virtualbox__intnet: opts[:virtualbox__intnet]
+
+     if config.vm.hostname == "client"
+       config.vm.provision "ansible" do |ansible|
+        ansible.playbook = "ansible/ansible.yml"
+        ansible.host_key_checking = "False"
+        ansible.limit = "all"
+       end
+      end
+
+    end
+
+    end
+
+    config.vm.define "firewall" do |web|
+        web.vm.network "forwarded_port", guest:80, host:8080
+    end
+
+   # config.vm.define "wordpress" do |web|
+   #     web.vm.network "forwarded_port", guest:80, host:8082
+   # end
+
+
+
+end
